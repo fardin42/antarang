@@ -1,0 +1,72 @@
+
+@import "tailwindcss";
+:root {
+  /* Base colors */
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* Theme colors */
+  --primary-accent: #B25E3B;
+  --primary-accent-text: #F7F3ED;
+  --heading-text: #2F2F2F;
+  --body-text: #4A4A4A;
+  --main-bg: #E8D9C1;
+  --secondary-accent: #A3A17A;
+  --accent-highlight: #D46F4D;
+  --warm-ivory: #F7F3ED;
+  --footer-bg: #252525;
+  --deep-charcoal-60: rgba(47, 47, 47, 0.6);
+  --deep-charcoal-20: rgba(47, 47, 47, 0.2);
+  --light-text-on-dark: #CBD5E1;
+  --modal-form-text: #374151;
+}
+img{
+  width: 100%;
+  height: auto;
+  object-fit: cover
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Open Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom animation for fade-in-up */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-fade-in-up.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-fade-in-up.delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animate-fade-in-up.delay-600 {
+  animation-delay: 0.6s;
+}
