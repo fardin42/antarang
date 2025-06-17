@@ -20,6 +20,8 @@ const HeroSection = ({ onGetDetailsClick }: HeroSectionProps) => (
         alt="Aerial view of property"
         fill
         priority
+        loading='lazy'
+
         quality={85}
         sizes="100vw"
         style={{
