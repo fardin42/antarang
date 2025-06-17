@@ -1,5 +1,4 @@
 {
-  "homepage": "https://fardin42.github.io/antarang",
   "name": "new_antarang",
   "version": "0.1.0",
   "private": true,
@@ -7,8 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "predeploy": "next build",
-    "deploy": "gh-pages -d .next",
+
     "lint": "next lint"
   },
   "dependencies": {
