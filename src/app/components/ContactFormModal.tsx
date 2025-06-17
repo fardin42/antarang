@@ -24,7 +24,7 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
         <h2 className={`text-2xl font-bold ${colors.headingText} ${fonts.heading} mb-6 text-center`}>
           Get More Details
         </h2>
-        <form>
+        <form netlify>
           <div className="mb-4">
             <label htmlFor="modal-name" className={`block ${colors.modalFormText} text-sm font-bold mb-2 ${fonts.body}`}>Name</label>
             <input
