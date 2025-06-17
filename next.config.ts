@@ -2,8 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: 'export',
-  basePath: '/antarang',
-  assetPrefix: '/antarang',
+
   images: {
     remotePatterns: [
       {
