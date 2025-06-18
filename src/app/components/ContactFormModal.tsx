@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { colors, fonts } from '../utils/theme';
 import CTAButton from './CTAButton';
 
@@ -9,6 +10,48 @@ interface ContactFormModalProps {
 }
 
 const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const res = await fetch('https://hook.eu2.make.com/28s4gsk9q6utbb8pfw6w9vhc5lwtwhel', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+        setFormData({ name: '', email: '', phone: '', message: '' });
+        setTimeout(() => {
+          setSubmitted(false);
+          onClose();
+        }, 2000);
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Failed to submit the form. Please check your network.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -24,57 +67,53 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
         <h2 className={`text-2xl font-bold ${colors.headingText} ${fonts.heading} mb-6 text-center`}>
           Get More Details
         </h2>
-        <form >
-          <div className="mb-4">
-            <label htmlFor="modal-name" className={`block ${colors.modalFormText} text-sm font-bold mb-2 ${fonts.body}`}>Name</label>
-            <input
-              type="text"
-              id="modal-name"
-              name="name"
-              placeholder="Your Name"
-              className={`shadow appearance-none border rounded-xl w-full py-3 px-4 ${colors.modalFormText} leading-tight focus:outline-none focus:ring-2 focus:ring-[#B25E3B]`}
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="modal-email" className={`block ${colors.modalFormText} text-sm font-bold mb-2 ${fonts.body}`}>Email</label>
-            <input
-              type="email"
-              id="modal-email"
-              name="email"
-              placeholder="your.email@example.com"
-              className={`shadow appearance-none border rounded-xl w-full py-3 px-4 ${colors.modalFormText} leading-tight focus:outline-none focus:ring-2 focus:ring-[#B25E3B]`}
-            />
-          </div>
+
+        <form onSubmit={handleSubmit}>
+          {['name', 'email', 'phone'].map((field) => (
+            <div className="mb-4" key={field}>
+              <label
+                htmlFor={`modal-${field}`}
+                className={`block ${colors.modalFormText} text-sm font-bold mb-2 ${fonts.body}`}
+              >
+                {field.charAt(0).toUpperCase() + field.slice(1)}
+              </label>
+              <input
+                type={field === 'email' ? 'email' : field === 'phone' ? 'tel' : 'text'}
+                id={`modal-${field}`}
+                name={field}
+                value={formData[field as keyof typeof formData]}
+                onChange={handleChange}
+                placeholder={`Your ${field}`}
+                className={`shadow appearance-none border rounded-xl w-full py-3 px-4 ${colors.modalFormText} leading-tight focus:outline-none focus:ring-2 focus:ring-[#B25E3B]`}
+                required
+              />
+            </div>
+          ))}
+
           <div className="mb-6">
-            <label htmlFor="modal-phone" className={`block ${colors.modalFormText} text-sm font-bold mb-2 ${fonts.body}`}>Phone Number</label>
-            <input
-              type="tel"
-              id="modal-phone"
-              name="phone"
-              placeholder="+91 98765 43210"
-              className={`shadow appearance-none border rounded-xl w-full py-3 px-4 ${colors.modalFormText} leading-tight focus:outline-none focus:ring-2 focus:ring-[#B25E3B]`}
-            />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="modal-message" className={`block ${colors.modalFormText} text-sm font-bold mb-2 ${fonts.body}`}>Message</label>
+            <label
+              htmlFor="modal-message"
+              className={`block ${colors.modalFormText} text-sm font-bold mb-2 ${fonts.body}`}
+            >
+              Message
+            </label>
             <textarea
               id="modal-message"
               name="message"
               rows={4}
               placeholder="I'm interested in..."
+              value={formData.message}
+              onChange={handleChange}
               className={`shadow appearance-none border rounded-xl w-full py-3 px-4 ${colors.modalFormText} leading-tight focus:outline-none focus:ring-2 focus:ring-[#B25E3B]`}
             ></textarea>
           </div>
+
           <div className="flex items-center justify-center">
-            <CTAButton 
-              text="Submit Inquiry" 
-              className="w-full" 
-              href="#" 
-              onClick={(e) => { 
-                e.preventDefault(); 
-                alert('Inquiry submitted!'); 
-                onClose(); 
-              }} 
+            <CTAButton
+              text={loading ? 'Submitting...' : submitted ? 'Submitted!' : 'Submit Inquiry'}
+              className="w-full"
+              href="#"
+              onClick={() => {}}
             />
           </div>
         </form>
