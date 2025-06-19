@@ -113,7 +113,7 @@ const ContactFormModal = ({ isOpen, onClose }: ContactFormModalProps) => {
               text={loading ? 'Submitting...' : submitted ? 'Submitted!' : 'Submit Inquiry'}
               className="w-full"
               href="#"
-              onClick={() => {}}
+              onClick={handleSubmit}
             />
           </div>
         </form>

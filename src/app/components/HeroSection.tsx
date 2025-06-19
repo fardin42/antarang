@@ -20,7 +20,7 @@ const HeroSection = ({ onGetDetailsClick }: HeroSectionProps) => (
         alt="Aerial view of property"
         fill
         priority
-        loading='lazy'
+        
 
         quality={85}
         sizes="100vw"
@@ -33,7 +33,7 @@ const HeroSection = ({ onGetDetailsClick }: HeroSectionProps) => (
     </div>
 
     {/* Logo */}
-    <div className="absolute top-4 left-1/2 translate-x-[-50%] z-20 bg-amber-50 py-4 px-8 rounded-2xl">
+    <div className="absolute w-[200px] top-4 left-1/2 translate-x-[-50%] z-20 bg-amber-50 py-4 px-8 rounded-2xl">
       <Image
         src="/images/antarang_logo.webp"
         alt="Antrang Logo"
